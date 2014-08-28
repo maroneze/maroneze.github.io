@@ -1,0 +1,35 @@
+div {
+  border: 1px solid;
+  margin: 2px;
+  padding: 2px;
+}
+.lista {
+  border: 1px solid blue;
+  overflow-y: scroll;
+}
+.linkLike {
+  margin-left: 15px;
+  text-decoration: none;
+  color: blue;
+  cursor: pointer;
+  font-family: sans-serif;
+  font-size: smaller;
+}
+.warning {
+  color: red;
+}
+.good {
+  color: blue;
+}
+.neo {
+  color: #006600;
+}
+.boxed {
+  background-color: #f1f1f1;
+}
+#palavrasIgnoradas {
+  color: red;
+}
+.titulo {
+  font-weight:bold;
+}

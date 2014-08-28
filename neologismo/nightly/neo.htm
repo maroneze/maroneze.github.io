@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Extrator de neologismos</title>
+  
+  <script type='text/javascript' src='js/jquery-1.8.3.min.js'></script>
+  <script type='text/javascript' src="js/xregexp-all-min.js"></script>
+  <script type='text/javascript' src="js/swfobject.js"></script>
+  <script type='text/javascript' src="js/downloadify.min.js"></script>
+  <script type='text/javascript' src='neo.js'></script>
+  <link rel="stylesheet" type="text/css" href="neo.css">
+</head>
+<body>
+<!-- Copiar conteudo do JSFiddle aqui -->
+
+  <div id="divDic"><span class="titulo">Dicionários:</span>
+  <br>
+  <ul id="listDic"></ul>
+  <br><span class="titulo">Palavras adicionadas manualmente:</span> <span id="palavrasAdicionadas" class="good"></span>
+  <br><span class="titulo">Palavras ignoradas:</span> <span id="palavrasIgnoradas" class="warning"></span>
+
+  <br><span class="titulo">Total:</span> <span id="dicSize">0</span> palavras
+  <br><span class="titulo">Adicionar:</span>
+  <input type="file" id="fileDic" onchange="lerDicionario()" size="60">
+  <input type="radio" name="encodingDic" value="ISO-8859-1" checked>ISO-8859-1
+  <input type="radio" name="encodingDic" value="UTF-8">UTF-8
+  <br><span class="titulo">Exportar todas as palavras:</span> <span id="downloadifyDic">Esta funcionalidade exige Flash 10.</span>
+
+
+</div>
+<div id="divTexto"><span class="titulo">Texto:</span>
+  <input type="file" id="fileTexto" onchange="lerTexto()" size="60">
+  <input type="radio" name="encodingTexto" value="ISO-8859-1" checked>ISO-8859-1
+  <input type="radio" name="encodingTexto" value="UTF-8">UTF-8
+  <br>
+</div>
+<div id="divRes"><span class="titulo">Palavras desconhecidas:</span>
+  <ul class="lista" id="resultados" style="height: 200px;"></ul>
+</div>
+<div id="divNeo"><span class="titulo">Neologismos:</span> <span id="downloadifyNeo">Esta funcionalidade exige Flash 10.</span>
+
+
+  <ul
+  class="lista" id="neologismos" style="height: 80px;" class="neo"></ul>
+</div><span class="titulo">Mensagens:</span>
+<input type="button" value="Limpar" onclick="clearStdout()">
+<br>
+<textarea rows="30" cols="70" id="stdout" readonly></textarea>
+<script>
+  loadDownloadify('downloadifyDic', 'dicionario.txt', true);
+  loadDownloadify('downloadifyNeo', 'neologismos.txt', false);
+</script>
+<!-- Fim do espaço para copia do JSFiddle -->
+</body>
+</html>
