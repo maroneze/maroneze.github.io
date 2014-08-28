@@ -137,6 +137,17 @@ var adicionarDicionarioALista = function (nome) {
   $('#listDic').append($('<li>').append(nome));
 };
 
+var normalizarPalavrasDicionario = function(palavras) {
+  var palavrasNormalizadas = new Array();
+  
+  // remove tremas
+  var n = palavras.length;
+  for (i=0; i<n; i++) {
+    palavrasNormalizadas.push(palavras[i].replace(/ü/g, "u").replace(/Ü/g, "U"));
+  }
+  return palavrasNormalizadas;
+}
+
 // Lê o arquivo arq_dic e adiciona suas palavras às palavras presentes em dic.
 var lerDicionario = function () {
   var inputDic = $('#fileDic')[0];
@@ -154,8 +165,9 @@ var lerDicionario = function () {
       output("Aviso: dicionário contém caractere(s) inválido(s): '" + caracteresInvalidos[0] + "' (ASCII " + caracteresInvalidos[0].charCodeAt(0) + ")");
     }
     var palavrasDicionario = textoDicionario.replace(/\r\n/gi, "\n").split("\n");
-    var n = palavrasDicionario.length;
-    var newDic = arrayToWordSet(palavrasDicionario);
+    palavrasDicionarioNormalizadas = normalizarPalavrasDicionario(palavrasDicionario);
+    var n = palavrasDicionarioNormalizadas.length;
+    var newDic = arrayToWordSet(palavrasDicionarioNormalizadas);
     output(setLength(newDic) + " palavras lidas do dicionário.");
     var qtePalavrasAdicionadas;
     if (jQuery.isEmptyObject(dic)) {
@@ -232,6 +244,9 @@ var tokenizarTexto = function (texto) {
   texto = texto.replace(reOutrosUnicode, " ");
   // eliminacao de numeros
   texto = texto.replace(/\d+/g, " ");
+  // eliminacao de tremas
+  texto = texto.replace(/ü/g, "u");
+  texto = texto.replace(/Ü/g, "U");
 
   // Testa se ainda existe algum caractere "desconhecido"
   var unks = XRegExp.exec(texto, unknownCharRe);
@@ -306,7 +321,10 @@ var exibirPalavraDesconhecida = function (palavra) {
 };
 
 var horaSimples = function(date) {
-  return date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+  var hours = date.getHours();
+  var mins = date.getMinutes();
+  var secs = date.getSeconds();
+  return (hours < 10 ? "0" : "") + hours + ":" + (mins < 10 ? "0" : "") + mins + ":" + (secs < 10 ? "0" : "") + secs;
 };
 
 var lerTexto = function () {
