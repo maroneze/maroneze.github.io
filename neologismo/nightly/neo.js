@@ -1,4 +1,4 @@
-﻿//** Funções de uso de objetos como conjuntos de Strings **
+//** Funções de uso de objetos como conjuntos de Strings **
 // As chaves são as strings "normalizadas" (em minusculas), os elementos são as strings originais
 
 // Converte um vetor em conjunto
@@ -90,7 +90,7 @@ var loadDownloadify = function (id, nomeArq, isDic) {
       return wordSetToString(s);
     },
     onComplete: function () {
-      alert('Arquivo "' + nomeArq + '" salvo.');
+      alert('Arquivo exportado em formato UTF-8.');
     },
     onCancel: function () {
       //alert('You have cancelled the saving of this file.');
