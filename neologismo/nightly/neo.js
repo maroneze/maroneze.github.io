@@ -187,8 +187,36 @@ var lerDicionario = function () {
     atualizarTamanhoDicionario();
   };
   var encoding = $('input[type=radio][name=encodingDic]:checked')[0].value;
-  output(horaSimples(new Date()) + " - carregando dicionário...");
-  dicReader.readAsText(inputDic.files[0], encoding);
+  if (encoding == "autodetect") {
+    var encodingReader = new FileReader();
+    encodingReader.onload = function () {
+      output(horaSimples(new Date()) + " - dicionário carregado para detectar codificação.");
+      var chardet = jschardet.detect(encodingReader.result);
+      var cod = chardet.encoding;
+      output("codificação: " + cod + " (confiança: " + chardet.confidence + ")");
+      console.log("codificação: " + cod + " (confiança: " + chardet.confidence + ")");
+      var detectedEncoding = "unknown";
+      if (cod == "utf-8") {
+	output("UTF-8 detectado");
+	detectedEncoding = "UTF-8";
+      } else if (cod == "windows-1252" || cod == "windows-1251" || cod.indexOf("ISO-8859") === 0) {
+	output("ISO-8859 detectado");
+	detectedEncoding = "ISO-8859-1";
+      }
+      if (detectedEncoding == "unknown") {
+	output(horaSimples(new Date()) + "ERRO: codificação não detectada: " + cod);
+	return;
+      } else {
+	output(horaSimples(new Date()) + " - carregando dicionário...");
+	dicReader.readAsText(inputDic.files[0], detectedEncoding);
+      }
+    };
+    output(horaSimples(new Date()) + " - carregando dicionário para detectar codificação...");
+    encodingReader.readAsBinaryString(inputDic.files[0]);
+  } else {
+    output(horaSimples(new Date()) + " - carregando dicionário...");
+    dicReader.readAsText(inputDic.files[0], encoding);
+  }
 };
 
 var unknownCharRe = XRegExp("[^-\\p{Latin}\\d\\s]");
@@ -351,6 +379,34 @@ var lerTexto = function () {
   };
   var encoding = $('input[type=radio][name=encodingTexto]:checked')[0].value;
   // Modificação da interface para informar que o tratamento está sendo realizado
-  output(horaSimples(new Date()) + " - carregando texto...");
-  textoReader.readAsText($('#fileTexto')[0].files[0], encoding);
+  if (encoding == "autodetect") {
+    var encodingReader = new FileReader();
+    encodingReader.onload = function () {
+      output(horaSimples(new Date()) + " - texto carregado para detectar codificação.");
+      var chardet = jschardet.detect(encodingReader.result);
+      var cod = chardet.encoding;
+      output("codificação: " + cod + " (confiança: " + chardet.confidence + ")");
+      console.log("codificação: " + cod + " (confiança: " + chardet.confidence + ")");
+      var detectedEncoding = "unknown";
+      if (cod == "utf-8") {
+	output("UTF-8 detectado");
+	detectedEncoding = "UTF-8";
+      } else if (cod == "windows-1251" || cod == "windows-1252" || cod.indexOf("ISO-8859") === 0) {
+	output("ISO-8859 detectado");
+	detectedEncoding = "ISO-8859-1";
+      }
+      if (detectedEncoding == "unknown") {
+	output(horaSimples(new Date()) + "ERRO: codificação não detectada: " + cod);
+	return;
+      } else {
+	output(horaSimples(new Date()) + " - carregando texto...");
+	textoReader.readAsText($('#fileTexto')[0].files[0], detectedEncoding);
+      }
+    };
+    output(horaSimples(new Date()) + " - carregando dicionário para detectar codificação...");
+    encodingReader.readAsBinaryString($('#fileTexto')[0].files[0]);
+  } else {
+    output(horaSimples(new Date()) + " - carregando texto...");
+    textoReader.readAsText($('#fileTexto')[0].files[0], encoding);
+  }
 };
