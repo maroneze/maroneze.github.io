@@ -72,7 +72,7 @@ var wordSetToSortedArrayUppercaseLast = function (s) {
 var wordSetToString = function (s) {
   res = "";
   for (var k in s) {
-    res += s[k] + "\r\n";
+    res += s[k] + "\n";
   }
   return res;
 };
@@ -194,7 +194,6 @@ var lerDicionario = function () {
       var chardet = jschardet.detect(encodingReader.result);
       var cod = chardet.encoding;
       output("codificação: " + cod + " (confiança: " + chardet.confidence + ")");
-      console.log("codificação: " + cod + " (confiança: " + chardet.confidence + ")");
       var detectedEncoding = "unknown";
       if (cod == "utf-8") {
 	output("UTF-8 detectado");
@@ -321,7 +320,7 @@ var ignorarPalavra = function (palavra) {
 var exportarWordSet = function (titulo, s) {
   var res = "";
   for (var k in s) {
-    res += s[k] + "\r\n";
+    res += s[k] + "\n";
   }
   location.href = "data:text;charset=utf-8," + encodeURI(res);
 };
@@ -386,7 +385,6 @@ var lerTexto = function () {
       var chardet = jschardet.detect(encodingReader.result);
       var cod = chardet.encoding;
       output("codificação: " + cod + " (confiança: " + chardet.confidence + ")");
-      console.log("codificação: " + cod + " (confiança: " + chardet.confidence + ")");
       var detectedEncoding = "unknown";
       if (cod == "utf-8") {
 	output("UTF-8 detectado");
