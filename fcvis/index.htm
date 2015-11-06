@@ -1,0 +1,136 @@
+<html>
+<head>
+    <script type="text/javascript" src="node_modules/vis/dist/vis.js"></script>
+    <link href="node_modules/vis/dist/vis.css" rel="stylesheet" type="text/css" />
+
+    <style type="text/css">
+        #mynetwork {
+            width: 1900px;
+            height: 1000px;
+            border: 1px solid lightgray;
+        }
+    </style>
+</head>
+<body>
+<div id="mynetwork"></div>
+
+<script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
+<script type="text/javascript">
+function require(script) {
+    $.ajax({
+        url: script,
+        dataType: "script",
+        async: false,
+        success: function () {
+            // all good...
+        },
+        error: function () {
+            throw new Error("Could not load script " + script);
+        }
+    });
+}
+
+    // create an array with nodes
+    var nodes = new vis.DataSet([]);
+    require("nodes.js");
+    // create an array with edges
+    var edges = new vis.DataSet([]);
+    require("edges.js");
+
+    // create a network
+    var container = document.getElementById('mynetwork');
+
+    // provide the data in the vis format
+    var data = {
+        nodes: nodes,
+        edges: edges
+    };
+
+var options = {
+  nodes:{
+    borderWidth: 1,
+    //borderWidthSelected: undefined,
+    //brokenImage:undefined,
+    color: {
+      border: '#2B7CE9',
+      background: '#97C2FC',
+      highlight: {
+        border: '#2B7CE9',
+        background: '#D2E5FF'
+      },
+      hover: {
+        border: '#2B7CE9',
+        background: '#D2E5FF'
+      }
+    },
+    fixed: {
+      x:false,
+      y:false
+    },
+    font: {
+      color: '#343434',
+      size: 14, // px
+      face: 'arial',
+      background: 'none',
+      strokeWidth: 0, // px
+      strokeColor: '#ffffff',
+    },
+    group: undefined,
+    hidden: false,
+    icon: {
+      face: 'FontAwesome',
+      //code: undefined,
+      size: 50,  //50,
+      color:'#2B7CE9'
+    },
+    //image: undefined,
+    //label: undefined,
+    labelHighlightBold: true,
+    //level: undefined,
+    mass: 1,
+    physics: true,
+    scaling: {
+      min: 5,
+      max: 20,
+      label: {
+        enabled: false,
+        min: 10,
+        max: 30,
+        maxVisible: 30,
+        drawThreshold: 5
+      },
+      customScalingFunction: function (min,max,total,value) {
+        var scale = (Math.log(value) / Math.log(total));
+        if (!(scale > 0 && scale <= 1)) {
+				    console.log("INVALID SCALE: " + scale);
+				    }
+        return scale;
+      }
+    },
+    shadow:{
+      enabled: false,
+      size:10,
+      x:5,
+      y:5
+    },
+    shape: 'dot',
+    shapeProperties: {
+      borderDashes: false, // only for borders
+      borderRadius: 6,     // only for box shape
+      useImageSize: false,  // only for image and circularImage shapes
+      useBorderWithImage: false  // only for image shape
+    },
+    size: 25,
+    //title: undefined,
+    //value: undefined,
+    //x: undefined,
+    //y: undefined
+  }
+};
+
+    // initialize your network!
+    var network = new vis.Network(container, data, options);
+
+</script>
+</body>
+</html>
