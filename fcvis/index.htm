@@ -5,8 +5,8 @@
 
     <style type="text/css">
         #mynetwork {
-            width: 1900px;
-            height: 1000px;
+            width: 12000px;
+            height: 8000px;
             border: 1px solid lightgray;
         }
     </style>
@@ -69,8 +69,8 @@ var options = {
     },
     font: {
       color: '#343434',
-      size: 14, // px
-      face: 'arial',
+      size: 30, // px
+      face: 'Carlito',
       background: 'none',
       strokeWidth: 0, // px
       strokeColor: '#ffffff',
@@ -108,7 +108,7 @@ var options = {
       }
     },
     shadow:{
-      enabled: false,
+      enabled: true,
       size:10,
       x:5,
       y:5
@@ -120,11 +120,15 @@ var options = {
       useImageSize: false,  // only for image and circularImage shapes
       useBorderWithImage: false  // only for image shape
     },
-    size: 25,
+    size: 5,
     //title: undefined,
     //value: undefined,
     //x: undefined,
     //y: undefined
+  },
+  edges:{
+    arrows:{middle:{scaleFactor:0.5},from:{scaleFactor:0},to:{scaleFactor:0}},
+    width: 1
   }
 };
 
